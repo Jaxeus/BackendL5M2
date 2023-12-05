@@ -1,6 +1,14 @@
 const express = require("express");
 const app = express();
+// Missing import dotenv
+const dotenv = require("dotenv");
 const PORT = 4000;
+
+// Missing app.use for express.json()
+app.use(express.json());
+
+// Missing dotenv.config()
+dotenv.config();
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
