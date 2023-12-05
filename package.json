@@ -1,0 +1,16 @@
+{
+  "name": "backendl5m2",
+  "version": "1.0.0",
+  "description": "Redo of Mission 2 from scratch, using data from my prior attempts, with separate frontend and backend repos",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jason",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.2"
+  }
+}
