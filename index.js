@@ -1,18 +1,22 @@
+//----------IMPORTS----------//
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = 4000;
 const dotenv = require("dotenv");
 dotenv.config();
 
+//----------MIDDLEWARE----------//
 app.use(express.json());
 app.use(cors());
 
+//----------ENDPOINTS----------//
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post("/", async (req, res) => {
+console.log("Hi");
+
+app.post("/azure", async (req, res) => {
   const imageURL = req.body.imageURL;
 
   const apiEndpoint = process.env.VISION_ENDPOINT;
@@ -30,8 +34,14 @@ app.post("/", async (req, res) => {
 
   const response = await fetch(apiEndpoint, requestPost);
   const responseJSON = await response.json();
-  return res.status(200).json(responseJSON);
+
+  const data = responseJSON.tagsResult.values;
+
+  return res.status(200).send(data);
 });
+
+//----------PORT AND LISTEN----------//
+const PORT = 4000;
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
