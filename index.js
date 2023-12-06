@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
+const mongoose = require("mongoose");
 
 //----------MIDDLEWARE----------//
 app.use(express.json());
@@ -38,6 +39,46 @@ app.post("/azure", async (req, res) => {
   const data = responseJSON.tagsResult.values;
 
   return res.status(200).send(data);
+});
+
+//MongoDB endpoint
+// Connect to MongoDB using Mongoose
+mongoose.connect("mongodb://localhost:27017/Missions", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const YourModel = mongoose.model(
+  "YourModel",
+  new mongoose.Schema({
+    url: {
+      type: String,
+      required: true,
+    },
+    body: {
+      type: String,
+      required: true,
+    },
+    colour: {
+      type: String,
+      required: true,
+    },
+    model: {
+      type: String,
+      required: true,
+    },
+  })
+);
+
+app.get("/getData", async (req, res) => {
+  try {
+    const mongoData = await YourModel.find({}); // Query your MongoDB collection
+
+    res.json(mongoData);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 //----------PORT AND LISTEN----------//
